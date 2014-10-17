@@ -20,7 +20,7 @@ public class User{
 		this.login = login;
 	}
 
-	public String getLogin(){
+	 public String getLogin(){
 		return login;
 	}
 
