@@ -1,6 +1,5 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-
 	
 	<artifactId>app-core</artifactId>	
 	<packaging>jar</packaging>
@@ -8,8 +7,7 @@
 	<parent>
 		<groupId>com.epam.brest.courses</groupId>
 		<artifactId>sampleusermanagement</artifactId>
-		<version>1.0.0-SNAPSHOT</version>	
-		
+		<version>1.0.0-SNAPSHOT</version>		
 	</parent>
 
 	<properties>
@@ -17,18 +15,14 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>				
 		</dependency>
-
 	</dependencies>
 
     <build>
         <testSourceDirectory>src/test/java</testSourceDirectory>
     </build>
-
-
 
 </project>
