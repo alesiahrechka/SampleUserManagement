@@ -1,7 +1,7 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	
-	<artifactId>app-core</artifactId>	
+	<artifactId>app-dao</artifactId>	
 	<packaging>jar</packaging>
 
 	<parent>
@@ -15,10 +15,19 @@
 	</properties>
 
 	<dependencies>
+ 		<dependency>
+			<groupId>com.epam.brest.courses</groupId>
+			<artifactId>app-core</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>				
 		</dependency>
 	</dependencies>
+
+    <build>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+    </build>
 
 </project>
