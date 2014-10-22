@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by alesya on 22.10.14.
  */
-public class UserDaoImolTest {
+public class UserDaoImplTest {
 
     @Autowired
     private UserDao userDao;
