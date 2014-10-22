@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/testApplicationContextSpring.xml" })
 public class UserDaoImplTest {
+
     @Autowired
     private UserDao userDao;
 
@@ -21,5 +22,23 @@ public class UserDaoImplTest {
     public void getUsers() {
         List<User> users = userDao.getUsers();
         assertNotNull(users);
+        assertFalse(users.isEmpty());
+    }
+
+    @Test
+    public void addUser(){
+        List<User> users = userDao.getUsers();
+        int sizeBefore = users.size();
+
+        User user  = new User();
+        user.setUserId(3L);
+        user.setUserName("UserName3");
+        user.setLogin("UserLogin3");
+
+        userDao.addUser(user);
+        users = userDao.getUsers();
+
+        assertEquals(sizeBefore,users.size()-1);
+
     }
 }
