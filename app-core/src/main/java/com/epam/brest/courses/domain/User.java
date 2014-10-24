@@ -6,8 +6,20 @@ public class User{
 	
 	private String login;
 
-	private String userName;
-	
+	private String name;
+
+    public User(){
+        this.userId = -1L;
+        this.login = "";
+        this.name = "";
+    }
+
+    public User(Long userId,String login,String name){
+        this.userId = userId;
+        this.login = login;
+        this.name = name;
+    }
+
 	public void setUserId(Long userId){
 		this.userId = userId;
 	}
@@ -20,16 +32,16 @@ public class User{
 		this.login = login;
 	}
 
-	 public String getLogin(){
+	public String getLogin(){
 		return login;
 	}
 
-	public void setUserName(String userName){
-		this.userName = userName;
+	public void setName(String name){
+		this.name = name;
 	}
 
-	public String getUserName(){
-		return userName;
+	public String getName(){
+		return name;
 	}
 }
 

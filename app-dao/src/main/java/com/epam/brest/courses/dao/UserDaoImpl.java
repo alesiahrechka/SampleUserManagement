@@ -24,7 +24,12 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void addUser(User user) {
         jdbcTemplate.update("insert into USER(userid, login, name) values(?,?,?)",
-                user.getUserId(), user.getLogin(), user.getUserName());
+                user.getUserId(), user.getLogin(), user.getName());
+    }
+
+    @Override
+    public void removeUser(Long userId) {
+        jdbcTemplate.update("delete from USER where userid = ?",userId  );
     }
 
     @Override
@@ -32,19 +37,13 @@ public class UserDaoImpl implements UserDao {
         return jdbcTemplate.query("select userid, login, name from USER", new UserMapper());
     }
 
-    @Override
-    public void removeUser(Long userId) {
-
-    }
-
     public class UserMapper implements RowMapper<User> {
-
 
         public User mapRow(ResultSet rs, int i) throws SQLException {
             User user = new User();
             user.setUserId(rs.getLong("userid"));
             user.setLogin(rs.getString("login"));
-            user.setUserName(rs.getString("name"));
+            user.setName(rs.getString("name"));
             return user;
         }
     }
