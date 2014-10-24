@@ -9,10 +9,16 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+
 /**
  * Created by alesya on 21.10.14.
  */
 public class UserDaoImpl implements UserDao {
+
+  // private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+
+
 
     private JdbcTemplate jdbcTemplate;
 
@@ -34,6 +40,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByID(Long userId){
+
         return null;
     }
 
