@@ -33,6 +33,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserByID(Long userId){
+        return null;
+    }
+
+    @Override
     public List<User> getUsers() {
         return jdbcTemplate.query("select userid, login, name from USER", new UserMapper());
     }

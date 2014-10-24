@@ -13,6 +13,8 @@ public interface UserDao {
 
     public void removeUser(Long userId);
 
+    public User getUserByID(Long userId);
+
     public List<User> getUsers();
 
 
