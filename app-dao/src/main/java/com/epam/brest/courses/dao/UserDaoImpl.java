@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * Created by alesya on 21.10.14.
  */
@@ -67,7 +66,6 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-
     @Override
     public User getUserByLogin(String login) {
         LOGGER.debug("getUserByLogin(login={})", login);
@@ -91,7 +89,6 @@ public class UserDaoImpl implements UserDao {
         parameters.put(LOGIN, user.getLogin());
         parameters.put(USER_ID, user.getUserId());
         namedJdbcTemplate.update(UPDATE_USER_SQL, parameters);
-
     }
 
     public class UserMapper implements RowMapper<User> {
@@ -104,6 +101,5 @@ public class UserDaoImpl implements UserDao {
             return user;
         }
     }
-
 
 }

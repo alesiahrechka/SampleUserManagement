@@ -30,7 +30,7 @@ public class UserDaoImplTest {
         List<User> users = userDao.getUsers();
         int sizeBefore = users.size();
 
-        User user  = new User(3L,"UserName3","UserLogin3");
+        User user  = new User(3L,"UserLogin3","UserName3");
 
         userDao.addUser(user);
         users = userDao.getUsers();
@@ -51,6 +51,39 @@ public class UserDaoImplTest {
         userDao.removeUser(2L);
         users = userDao.getUsers();
         assertEquals(sizeBefore-1, users.size());
+    }
+
+    @Test
+    public void getUserById(){
+
+        Long userId = 1L;
+        User user = userDao.getUserById(userId);
+        assertNotNull(user);
+        assertEquals(userId,user.getUserId());
+    }
+
+    @Test
+    public void getUserByLogin(){
+
+        String userLogin = "userLogin1";
+        User user = userDao.getUserByLogin(userLogin);
+        assertNotNull(user);
+        assertEquals(userLogin,user.getLogin());
+    }
+
+    @Test
+    public void  updateUser(){
+
+        Long userId = 1L;
+        String userLoginUpdate = "userLoginUpdate";
+        String userNameUpdate = "userNameUpdate";
+
+        userDao.updateUser(new User(userId,userLoginUpdate, userNameUpdate));
+
+        User userUpdate = userDao.getUserById(userId);
+
+        assertEquals( userLoginUpdate, userUpdate.getLogin() );
+        assertEquals( userNameUpdate, userUpdate.getName() );
 
     }
 
