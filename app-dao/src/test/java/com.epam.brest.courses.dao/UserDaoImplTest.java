@@ -42,6 +42,7 @@ public class UserDaoImplTest {
     public void removeUser(){
 
         List<User> users = userDao.getUsers();
+
         int sizeBefore = users.size();
         userDao.removeUser(4L);
         users = userDao.getUsers();
@@ -52,4 +53,5 @@ public class UserDaoImplTest {
         assertEquals(sizeBefore-1, users.size());
 
     }
+
 }
