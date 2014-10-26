@@ -55,4 +55,45 @@ public class UserServiceImplTest {
         User user = userService.getUserByLogin(ADMIN);
         Assert.assertEquals(ADMIN, user.getLogin());
     }
+
+    @Test
+    public void getUserByLogin(){
+
+        //TODO:
+    }
+
+    @Test
+    public void getUserById(){
+
+        //TODO:
+    }
+
+    @Test
+    public void removeUser(){
+        //TODO:
+
+    }
+
+
+    @Test
+    public void updateUser(){
+
+        Long userId = 1L;
+        String userLoginUpdate = "userLoginUpdate";
+        String userNameUpdate = "userNameUpdate";
+
+        userService.updateUser(new User(userId,userLoginUpdate, userNameUpdate));
+
+        User userUpdate = userService.getUserById(userId);
+
+        assertEquals( userLoginUpdate, userUpdate.getLogin() );
+        assertEquals( userNameUpdate, userUpdate.getName() );
+
+    }
+
+    @Test
+    public void getUsers(){
+        //TODO:
+    }
+
 }

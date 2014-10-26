@@ -10,13 +10,13 @@ public interface UserService {
 
     public void addUser(User user);
 
-    public User getUserByLogin(String login);
-
-    public List<User> getUsers();
-
     public void removeUser(Long userId);
 
     public User getUserById(long userId);
 
     public void updateUser(User user);
+
+    public User getUserByLogin(String login);
+
+    public List<User> getUsers();
 }

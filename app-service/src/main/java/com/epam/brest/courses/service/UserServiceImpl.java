@@ -50,18 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers(){
-
-        return userDao.getUsers();
-    }
-
-    @Override
-    public void removeUser(Long userId){
-        userDao.removeUser(userId);
-
-    }
-
-    @Override
     public User getUserById(long userId){
         User user = null;
         try {
@@ -73,19 +61,53 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void removeUser(Long userId){
+        userDao.removeUser(userId);
+
+    }
+
+    @Override
     public void updateUser(User user){
-        //TODO:
 
         Assert.notNull(user);
         Assert.notNull(user.getUserId());
         Assert.notNull(user.getLogin(), "User login should be specified.");
         Assert.notNull(user.getName(),  "User name should be specified.");
 
-        //Assert.isTrue( user.getName() == ADMIN, " It is not allowed to update user with name 'admin'");
-        if ( user.getName() == ADMIN ){
-            LOGGER.debug("updateUser({}): It is not allowed to update user with name 'admin' ", user );
+        User modifyUser;
+
+        try{
+            modifyUser = userDao.getUserById(user.getUserId());
+        }
+        catch(EmptyResultDataAccessException e) {
+            LOGGER.debug("updateUser({}): exception:{}", user, e.toString() );
             return;
         }
-        userDao.updateUser(user);
+
+        // Verify modifyUser is upgradable
+        if (modifyUser.getLogin() == ADMIN){
+            LOGGER.debug("{}: User can not be modified", modifyUser);
+            return;
+        }
+        //  Assert.isTrue(modifyUser.getLogin() == ADMIN," User can not be modified" );
+
+        // Verify user parameters
+        if ( user.getLogin() == ADMIN ){
+            LOGGER.debug("It is not allowed new login <admin> " );
+            return;
+        }
+        // Assert.isTrue(user.getLogin() == ADMIN, "It is not allowed new login <admin> " );
+
+        try {
+            userDao.updateUser(user);
+        }
+        catch (EmptyResultDataAccessException e) {
+            LOGGER.debug("updateUser({}), Exception:{}",user, e.toString());
+        }
+    }
+
+    @Override
+    public List<User> getUsers(){
+        return userDao.getUsers();
     }
 }
