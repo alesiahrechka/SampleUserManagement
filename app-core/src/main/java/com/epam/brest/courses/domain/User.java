@@ -9,9 +9,6 @@ public class User{
 	private String name;
 
     public User(){
-        this.userId = -1L;
-        this.login = "";
-        this.name = "";
     }
 
     public User(Long userId,String login,String name){

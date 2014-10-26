@@ -29,9 +29,11 @@ public class UserServiceImpl implements UserService {
     public void addUser(User user) {
         Assert.notNull(user);
         Assert.isNull(user.getUserId());
-        Assert.notNull(user.getLogin(), "User login should be specified.");
+        Assert.notNull(user.getLogin(),"User login should be specified.");
         Assert.notNull(user.getName(), "User name should be specified.");
+
         User existingUser = getUserByLogin(user.getLogin());
+
         if (existingUser != null) {
             throw new IllegalArgumentException("User is present in DB");
         }
@@ -63,17 +65,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(Long userId){
         userDao.removeUser(userId);
-
     }
 
     @Override
     public void updateUser(User user){
 
-        Assert.notNull(user);
-        Assert.notNull(user.getUserId());
-        Assert.notNull(user.getLogin(), "User login should be specified.");
-        Assert.notNull(user.getName(),  "User name should be specified.");
+        LOGGER.debug("updateUser({})", user );
 
+        Assert.notNull(user);
         User modifyUser;
 
         try{
@@ -85,18 +84,20 @@ public class UserServiceImpl implements UserService {
         }
 
         // Verify modifyUser is upgradable
-        if (modifyUser.getLogin() == ADMIN){
-            LOGGER.debug("{}: User can not be modified", modifyUser);
-            return;
+        if (modifyUser.getLogin() == ADMIN) {
+            if (user.getLogin() != ADMIN) {
+                LOGGER.debug("updateUser: It is not allowed to change login admin");
+                return;
+            }
         }
-        //  Assert.isTrue(modifyUser.getLogin() == ADMIN," User can not be modified" );
 
-        // Verify user parameters
+        // Verify new user parameters
         if ( user.getLogin() == ADMIN ){
-            LOGGER.debug("It is not allowed new login <admin> " );
-            return;
+            if(modifyUser.getLogin() != ADMIN) {
+                LOGGER.debug("It is not allowed to use login <admin> " );
+                return;
+            }
         }
-        // Assert.isTrue(user.getLogin() == ADMIN, "It is not allowed new login <admin> " );
 
         try {
             userDao.updateUser(user);

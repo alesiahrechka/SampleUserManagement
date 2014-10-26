@@ -25,7 +25,6 @@ public class UserServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -57,26 +56,83 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getUserByLogin(){
+    public void testGetUserByLogin(){
+        //TODO:
+    }
+
+    @Test
+    public void testGetUserById(){
 
         //TODO:
     }
 
     @Test
-    public void getUserById(){
-
+    public void testRemoveUser(){
         //TODO:
     }
 
     @Test
-    public void removeUser(){
+    public void testUpdateAdminUserLogin(){
         //TODO:
 
+        try{
+            userService.addUser(new User(null, ADMIN, ADMIN));
+        }
+        catch (IllegalArgumentException e){
+        }
+
+        User adminUser = userService.getUserByLogin(ADMIN);
+
+        userService.updateUser(new User(adminUser.getUserId(), "newLogin", "newName"));
+
+        User adminUserUpdated = userService.getUserById(adminUser.getUserId());
+
+        assertEquals(adminUser.getLogin(), adminUserUpdated.getLogin());
+        assertEquals(adminUser.getName(), adminUserUpdated.getName());
     }
 
+    @Test
+    public void testUpdateAdminUserName(){
+
+        String NEW_NAME = "newName";
+
+        try{
+            userService.addUser(new User(null, ADMIN, ADMIN));
+        }
+        catch (IllegalArgumentException e){
+        }
+
+        User adminUser = userService.getUserByLogin(ADMIN);
+        assertNotNull(adminUser);
+
+        adminUser.setName(NEW_NAME);
+
+        userService.updateUser(adminUser);
+
+        User adminUserUpdated = userService.getUserById(adminUser.getUserId());
+        assertNotNull(adminUserUpdated);
+
+        assertEquals(adminUser.getLogin(), ADMIN);
+        assertEquals(adminUser.getName(),  NEW_NAME);
+    }
 
     @Test
-    public void updateUser(){
+    public void testUpdateUserWithAdminLogin(){
+        Long userId = 1L;
+        String userNameUpdate = "userNameUpdate";
+
+        User userPrevious = userService.getUserById(userId);
+
+        userService.updateUser(new User(userId,ADMIN, userNameUpdate));
+
+        User userUpdated = userService.getUserById(userId);
+
+        assertEquals( userPrevious.getLogin(), userUpdated.getLogin() );
+        assertEquals( userPrevious.getName(), userUpdated.getName() );
+    }
+
+    @Test
+    public void testUpdateUser(){
 
         Long userId = 1L;
         String userLoginUpdate = "userLoginUpdate";
@@ -88,11 +144,10 @@ public class UserServiceImplTest {
 
         assertEquals( userLoginUpdate, userUpdate.getLogin() );
         assertEquals( userNameUpdate, userUpdate.getName() );
-
     }
 
     @Test
-    public void getUsers(){
+    public void testGetUsers(){
         //TODO:
     }
 
