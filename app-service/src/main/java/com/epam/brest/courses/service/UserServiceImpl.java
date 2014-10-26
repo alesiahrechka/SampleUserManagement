@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
+    public static final String ADMIN = "admin";
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     private UserDao userDao;
@@ -42,29 +44,48 @@ public class UserServiceImpl implements UserService {
         try {
             user = userDao.getUserByLogin(login);
         } catch (EmptyResultDataAccessException e) {
-            //TODO: add logger
+            LOGGER.debug("getUserByLogin({}), Exception:{}",login, e.toString());
         }
         return user;
     }
 
     @Override
     public List<User> getUsers(){
+
         return userDao.getUsers();
     }
 
     @Override
     public void removeUser(Long userId){
-        //TODO:
+        userDao.removeUser(userId);
+
     }
 
     @Override
     public User getUserById(long userId){
-        //TODO:
-        return null;
+        User user = null;
+        try {
+            user = userDao.getUserById(userId);
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.debug("getUserById({}), Exception:{}",userId, e.toString());
+        }
+        return user;
     }
 
     @Override
     public void updateUser(User user){
         //TODO:
+
+        Assert.notNull(user);
+        Assert.notNull(user.getUserId());
+        Assert.notNull(user.getLogin(), "User login should be specified.");
+        Assert.notNull(user.getName(),  "User name should be specified.");
+
+        //Assert.isTrue( user.getName() == ADMIN, " It is not allowed to update user with name 'admin'");
+        if ( user.getName() == ADMIN ){
+            LOGGER.debug("updateUser({}): It is not allowed to update user with name 'admin' ", user );
+            return;
+        }
+        userDao.updateUser(user);
     }
 }

@@ -86,5 +86,4 @@ public class UserDaoImplTest {
         assertEquals( userNameUpdate, userUpdate.getName() );
 
     }
-
 }
