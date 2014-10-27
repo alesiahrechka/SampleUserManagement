@@ -1,6 +1,8 @@
 package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.domain.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +20,9 @@ import static org.junit.Assert.*;
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=false)
 @Transactional
 public class UserServiceImplTest {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public static final String ADMIN = "admin";
 
     @Autowired

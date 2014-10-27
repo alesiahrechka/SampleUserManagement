@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         try {
             user = userDao.getUserByLogin(login);
         } catch (EmptyResultDataAccessException e) {
-            LOGGER.debug("getUserByLogin({}), Exception:{}",login, e.toString());
+            LOGGER.error("getUserByLogin({}), Exception:{}",login, e.toString());
         }
         return user;
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         try {
             user = userDao.getUserById(userId);
         } catch (EmptyResultDataAccessException e) {
-            LOGGER.debug("getUserById({}), Exception:{}",userId, e.toString());
+            LOGGER.error("getUserById({}), Exception:{}",userId, e.toString());
         }
         return user;
     }
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
             modifyUser = userDao.getUserById(user.getUserId());
         }
         catch(EmptyResultDataAccessException e) {
-            LOGGER.debug("updateUser({}): exception:{}", user, e.toString() );
+            LOGGER.error("updateUser({}): exception:{}", user, e.toString() );
             return;
         }
 
