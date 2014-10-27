@@ -11,8 +11,9 @@ import static org.junit.Assert.*;
 /**
  * Created by alesya on 22.10.14.
  */
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/testApplicationContextSpring.xml" })
+@ContextConfiguration(locations = {"classpath:/spring-dao-test.xml"})
 public class UserDaoImplTest {
 
     @Autowired
