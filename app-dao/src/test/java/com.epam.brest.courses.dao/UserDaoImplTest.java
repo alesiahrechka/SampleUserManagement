@@ -3,6 +3,7 @@ import com.epam.brest.courses.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserDaoImplTest {
         List<User> users = userDao.getUsers();
         int sizeBefore = users.size();
 
-        User user  = new User(3L,"UserLogin3","UserName3");
+        User user  = new User(null,"UserLogin3","UserName3");
 
         userDao.addUser(user);
         users = userDao.getUsers();
@@ -63,6 +64,13 @@ public class UserDaoImplTest {
         assertEquals(userId,user.getUserId());
     }
 
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void getUserByIdAbsent(){
+
+        Long userId = 13L;
+        User user = userDao.getUserById(userId);
+    }
+
     @Test
     public void getUserByLogin(){
 
@@ -70,6 +78,13 @@ public class UserDaoImplTest {
         User user = userDao.getUserByLogin(userLogin);
         assertNotNull(user);
         assertEquals(userLogin,user.getLogin());
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void getUserByLoginAbsent(){
+
+        String userLogin = "absentLogin";
+        User user = userDao.getUserByLogin(userLogin);
     }
 
     @Test
@@ -85,6 +100,5 @@ public class UserDaoImplTest {
 
         assertEquals( userLoginUpdate, userUpdate.getLogin() );
         assertEquals( userNameUpdate, userUpdate.getName() );
-
     }
 }
