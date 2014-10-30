@@ -21,7 +21,7 @@ import java.util.zip.DataFormatException;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:/spring-services-mock.xml" })
+@ContextConfiguration(locations = { "classpath*:/spring-services-mock-test.xml" })
 public class UserServiceImplMockTest {
 
     @Autowired
