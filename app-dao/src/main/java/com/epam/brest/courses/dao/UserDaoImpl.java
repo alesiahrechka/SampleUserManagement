@@ -1,13 +1,20 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.Assert;
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -54,17 +61,24 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void addUser(User user) {
+    public int addUser(User user) {
         LOGGER.debug("addUser({}) ", user);
         Assert.notNull(user);
         Assert.isNull(user.getUserId());
         Assert.notNull(user.getLogin(), "User login should be specified.");
         Assert.notNull(user.getName(), "User name should be specified.");
-        Map<String, Object> parameters = new HashMap(3);
-        parameters.put(NAME, user.getName());
-        parameters.put(LOGIN, user.getLogin());
-        parameters.put(USER_ID, user.getUserId());
-        namedJdbcTemplate.update(addNewUserSql, parameters);
+
+        KeyHolder keyholder = new GeneratedKeyHolder();
+
+        SqlParameterSource namedParameters;
+        namedParameters = new MapSqlParameterSource()
+                .addValue(NAME, user.getName())
+                .addValue(LOGIN, user.getLogin())
+                .addValue(USER_ID, user.getUserId());
+        namedJdbcTemplate.update(addNewUserSql, namedParameters, keyholder);
+        LOGGER.debug("addUser(): id{}",keyholder.getKey());
+
+        return  keyholder.getKey().intValue();
     }
 
     @Override
@@ -105,10 +119,15 @@ public class UserDaoImpl implements UserDao {
 
     }
 
+    @Override
+    public User getUserInstance() {
+        return new UserImpl();
+    }
+
     public class UserMapper implements RowMapper<User> {
 
         public User mapRow(ResultSet rs, int i) throws SQLException {
-            User user = new User();
+            User user = getUserInstance();
             user.setUserId(rs.getLong(USER_ID));
             user.setLogin(rs.getString(LOGIN));
             user.setName(rs.getString(NAME));

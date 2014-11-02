@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface UserDao {
 
-    public void addUser(User user);
+    public int addUser(User user);
 
     public List<User> getUsers();
 
@@ -20,6 +20,8 @@ public interface UserDao {
     public User getUserById(long userId);
 
     public void updateUser(User user);
+
+    public User getUserInstance();
 
 
 }

@@ -1,5 +1,6 @@
 package com.epam.brest.courses.dao;
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +33,8 @@ public class UserParameterizedTest {
     public static Collection data() {
         Object[][] params = new Object[][] {
                 {null},
-                {new User()},
-                {new User(12L, "", "")}
+                {new UserImpl()},
+                {new UserImpl(12L, "", "")}
         };
         return Arrays.asList(params);
     }

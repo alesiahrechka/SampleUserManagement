@@ -1,5 +1,6 @@
 package com.epam.brest.courses.dao;
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,9 @@ public class UserDaoImplTest {
         List<User> users = userDao.getUsers();
         int sizeBefore = users.size();
 
-        User user  = new User(null,"UserLogin3","UserName3");
+
+
+        User user  = new UserImpl(null,"UserLogin3","UserName3");
 
         userDao.addUser(user);
         users = userDao.getUsers();
@@ -94,7 +97,9 @@ public class UserDaoImplTest {
         String userLoginUpdate = "userLoginUpdate";
         String userNameUpdate = "userNameUpdate";
 
-        userDao.updateUser(new User(userId,userLoginUpdate, userNameUpdate));
+
+
+        userDao.updateUser(new UserImpl(userId,userLoginUpdate, userNameUpdate));
 
         User userUpdate = userDao.getUserById(userId);
 
