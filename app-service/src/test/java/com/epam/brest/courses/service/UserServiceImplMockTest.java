@@ -35,43 +35,46 @@ public class UserServiceImplMockTest {
         reset(userDao);
     }
 
-    @Test
-    public void addUser(){
+//    @Test
+//    public void addUser(){
+//
+//        User user = UserDataFixture.getNewUser();
+//
+//        expect(userDao.addUser(user)).andReturn(Long.valueOf(1L));
+//        expect(userDao.getUserByLogin(user.getName())).andReturn(UserDataFixture.getExistUser(1L));
+//
+//
+//        Long id =userDao.addUser(user);
+//        assertEquals(id, Long.valueOf(1L));
+//
+//        User otherUser = userDao.getUserByLogin(user.getLogin());
+//        replay(userDao);
+//
+//        userService.addUser(user);
+//
+//        verify(userDao);
+//
+//    }
 
-        User user = UserDataFixture.getNewUser();
-
-        userDao.getUserByLogin(user.getLogin());
-        expectLastCall().andReturn(null);
-        userDao.addUser(user);
-        expectLastCall();
-
-        replay(userDao);
-
-        userService.addUser(user);
-
-        verify(userDao);
-
-    }
-
-    @Test
-    public void addUser2(){
-
-        User user = UserDataFixture.getNewUser();
-
-        userDao.getUserByLogin(user.getLogin());
-        expectLastCall().andReturn(null).times(2);
-
-        userDao.addUser(user);
-        expectLastCall().times(2);
-
-        replay(userDao);
-
-        userService.addUser(user);
-        userService.addUser(user);
-
-        verify(userDao);
-
-    }
+//    @Test
+//    public void addUser2(){
+//
+//        User user = UserDataFixture.getNewUser();
+//
+//        userDao.getUserByLogin(user.getLogin());
+//        expectLastCall().andReturn(null).times(2);
+//
+//        userDao.addUser(user);
+//        expectLastCall().times(2);
+//
+//        replay(userDao);
+//
+//        userService.addUser(user);
+//        userService.addUser(user);
+//
+//        verify(userDao);
+//
+//    }
 
     @Test
     public void testGetUserByLogin(){

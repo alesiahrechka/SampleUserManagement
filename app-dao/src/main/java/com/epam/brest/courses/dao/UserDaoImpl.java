@@ -1,7 +1,6 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
-import com.epam.brest.courses.domain.UserImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,7 +60,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int addUser(User user) {
+    public Long addUser(User user) {
         LOGGER.debug("addUser({}) ", user);
         Assert.notNull(user);
         Assert.isNull(user.getUserId());
@@ -78,7 +77,7 @@ public class UserDaoImpl implements UserDao {
         namedJdbcTemplate.update(addNewUserSql, namedParameters, keyholder);
         LOGGER.debug("addUser(): id{}",keyholder.getKey());
 
-        return  keyholder.getKey().intValue();
+        return  keyholder.getKey().longValue();
     }
 
     @Override
@@ -101,7 +100,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserById(long userId) {
+    public User getUserById(Long userId) {
         LOGGER.debug("getUserById(userId={})", userId);
         return jdbcTemplate.queryForObject(selectUserByIdSql,
                 new UserMapper(), userId);
@@ -116,18 +115,13 @@ public class UserDaoImpl implements UserDao {
         parameters.put(LOGIN, user.getLogin());
         parameters.put(USER_ID, user.getUserId());
         namedJdbcTemplate.update(updateUserSql, parameters);
-
     }
 
-    @Override
-    public User getUserInstance() {
-        return new UserImpl();
-    }
 
     public class UserMapper implements RowMapper<User> {
 
         public User mapRow(ResultSet rs, int i) throws SQLException {
-            User user = getUserInstance();
+            User user = new User();
             user.setUserId(rs.getLong(USER_ID));
             user.setLogin(rs.getString(LOGIN));
             user.setName(rs.getString(NAME));
