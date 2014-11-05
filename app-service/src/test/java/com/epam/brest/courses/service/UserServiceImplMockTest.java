@@ -21,7 +21,7 @@ import java.util.zip.DataFormatException;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:/spring-services-mock-test.xml" })
+@ContextConfiguration(locations = {"classpath*:/spring-services-mock-test.xml"})
 public class UserServiceImplMockTest {
 
     @Autowired
@@ -31,94 +31,56 @@ public class UserServiceImplMockTest {
     private UserDao userDao;
 
     @After
-    public void clean(){
+    public void clean() {
         reset(userDao);
     }
 
-//    @Test
-//    public void addUser(){
-//
-//        User user = UserDataFixture.getNewUser();
-//
-//        expect(userDao.addUser(user)).andReturn(Long.valueOf(1L));
-//        expect(userDao.getUserByLogin(user.getName())).andReturn(UserDataFixture.getExistUser(1L));
-//
-//
-//        Long id =userDao.addUser(user);
-//        assertEquals(id, Long.valueOf(1L));
-//
-//        User otherUser = userDao.getUserByLogin(user.getLogin());
-//        replay(userDao);
-//
-//        userService.addUser(user);
-//
-//        verify(userDao);
-//
-//    }
+    @Test
+    public void addUser() {
+        User user = UserDataFixture.getNewUser();
+        expect(userDao.addUser(user)).andReturn(Long.valueOf(1L));
+        expect(userDao.getUserByLogin(user.getLogin())).andReturn(null);
+        replay(userDao);
+        Long id = userService.addUser(user);
+        assertEquals(id, Long.valueOf(1L));
+    }
 
-//    @Test
-//    public void addUser2(){
-//
-//        User user = UserDataFixture.getNewUser();
-//
-//        userDao.getUserByLogin(user.getLogin());
-//        expectLastCall().andReturn(null).times(2);
-//
-//        userDao.addUser(user);
-//        expectLastCall().times(2);
-//
-//        replay(userDao);
-//
-//        userService.addUser(user);
-//        userService.addUser(user);
-//
-//        verify(userDao);
-//
-//    }
+    //Test
+    public void addUser2() {
+        User user = UserDataFixture.getNewUser();
+        userDao.addUser(user);
+        expectLastCall().times(2);
+        userDao.getUserByLogin(user.getLogin());
+        expectLastCall().andReturn(null).times(2);
+        replay(userDao);
+        userService.addUser(user);
+        userService.addUser(user);
+        verify(userDao);
+    }
 
     @Test
-    public void testGetUserByLogin(){
+    public void getUserByLogin() {
         User user = UserDataFixture.getExistUser(1L);
-
-//        userDao.getUserByLogin(user.getLogin());
-//        expectLastCall().andReturn(user);
-
         expect(userDao.getUserByLogin(user.getLogin())).andReturn(user);
-
         replay(userDao);
-
-        User userResult = userService.getUserByLogin(user.getLogin());
-
+        User result = userService.getUserByLogin(user.getLogin());
         verify(userDao);
-
-        assertSame(user, userResult);
-
+        assertSame(user, result);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testAddUserWithSameLogin(){
-
+    public void addUserWithSameLogin() {
         User user = UserDataFixture.getNewUser();
-
         expect(userDao.getUserByLogin(user.getLogin())).andReturn(user);
-
         replay(userDao);
-
         userService.addUser(user);
-
     }
 
-
-   @Test(expected = NumberFormatException.class)
-   //@Test(expected = DataFormatException.class)
-    public void testAddUserException(){
-
+    @Test(expected = UnsupportedOperationException.class)
+    public void throwException() {
         User user = UserDataFixture.getNewUser();
-
-        expect(userDao.getUserByLogin(user.getLogin())).andThrow( new NumberFormatException());
-
+        expect(userDao.getUserByLogin(user.getLogin())).andThrow(new UnsupportedOperationException());
         replay(userDao);
-
         userService.addUser(user);
     }
 }
