@@ -21,10 +21,13 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="com.epam.brest.courses"/>
-    <bean id ="viewResoulver"
-          class = "org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-          <property name="prefix" value="/WEB-INF/jsp" />
-          <property name="suffix" value=".jsp" />
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
     </bean>
 
 </beans>
