@@ -61,7 +61,6 @@ public class UserRestController {
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity updateUser(@RequestBody User user) {
-
         userService.updateUser(user);
         return new ResponseEntity("", HttpStatus.OK);
     }

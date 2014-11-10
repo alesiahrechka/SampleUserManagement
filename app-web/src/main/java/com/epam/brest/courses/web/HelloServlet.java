@@ -22,7 +22,7 @@ public class HelloServlet  extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         try {
-            out.print("Hello Hello");
+            out.print("Hello, ");
             out.print(parameter);
         } finally {
             out.close();

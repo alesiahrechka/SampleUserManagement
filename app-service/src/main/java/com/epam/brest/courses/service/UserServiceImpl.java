@@ -3,6 +3,7 @@ package com.epam.brest.courses.service;
 import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Long addUser(User user) {
         Assert.notNull(user);
         Assert.isNull(user.getUserId());
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User getUserByLogin(String login) {
         User user = null;
         try {
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User getUserById(long userId){
         User user = null;
         try {
@@ -63,11 +67,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void removeUser(Long userId){
         userDao.removeUser(userId);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user){
 
         LOGGER.debug("updateUser({})", user );
@@ -108,6 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public List<User> getUsers(){
         return userDao.getUsers();
     }
