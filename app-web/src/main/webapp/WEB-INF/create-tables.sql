@@ -1,5 +1,5 @@
-CREATE TABLE user(
+CREATE TABLE USER (
 userid BIGINT IDENTITY,
-login varchar(255) NOT NULL,
-name varchar(255) NOT NULL
+login VARCHAR(255) NOT NULL,
+name VARCHAR(255) NOT NULL
 );

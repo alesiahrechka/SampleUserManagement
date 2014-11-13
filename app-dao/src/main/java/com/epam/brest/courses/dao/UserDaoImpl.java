@@ -27,23 +27,31 @@ import java.util.Map;
  */
 public class UserDaoImpl implements UserDao {
 
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert_into_user_path}')).inputStream)}")
-    public String addNewUserSql;
+//    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert_into_user_path}')).inputStream)}")
+//    public String addNewUserSql;
+//
+//    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${delete_from_user_path}')).inputStream)}")
+//    public String deleteFromUserSql;
+//
+//    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${update_user_path}')).inputStream)}")
+//    public String updateUserSql;
+//
+//    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_all_users_path}')).inputStream)}")
+//    public String selectAllUsersSql;
+//
+//    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_user_by_id_path}')).inputStream)}")
+//    public String selectUserByIdSql;
+//
+//    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_user_by_login_path}')).inputStream)}")
+//    public String selectUserByLoginSql;
 
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${delete_from_user_path}')).inputStream)}")
-    public String deleteFromUserSql;
 
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${update_user_path}')).inputStream)}")
-    public String updateUserSql;
-
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_all_users_path}')).inputStream)}")
-    public String selectAllUsersSql;
-
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_user_by_id_path}')).inputStream)}")
-    public String selectUserByIdSql;
-
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_user_by_login_path}')).inputStream)}")
-    public String selectUserByLoginSql;
+    public static final String addNewUserSql ="insert into USER (userid, login, name) values (:userid, :login, :name)" ;
+    public static final String deleteFromUserSql = "delete from USER where userid = ?";
+    public static final String updateUserSql = "update user set name = :name, login = :login where userid = :userid";
+    public static final String selectAllUsersSql = "select userid, login, name from USER";
+    public static final String selectUserByIdSql = "select userid, login, name from USER where userid = ?";
+    public static final String selectUserByLoginSql = "select userid, login, name from USER where LCASE(login) = ?";
 
     public static final String USER_ID = "userid";
     public static final String LOGIN = "login";
@@ -75,6 +83,7 @@ public class UserDaoImpl implements UserDao {
                 .addValue(LOGIN, user.getLogin())
                 .addValue(USER_ID, user.getUserId());
         namedJdbcTemplate.update(addNewUserSql, namedParameters, keyholder);
+
         LOGGER.debug("addUser(): id{}",keyholder.getKey());
 
         return  keyholder.getKey().longValue();
@@ -97,6 +106,7 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("getUserByLogin(login={})", login);
         return jdbcTemplate.queryForObject(selectUserByLoginSql,
                 new String[]{login.toLowerCase()}, new UserMapper());
+
     }
 
     @Override
@@ -116,7 +126,6 @@ public class UserDaoImpl implements UserDao {
         parameters.put(USER_ID, user.getUserId());
         namedJdbcTemplate.update(updateUserSql, parameters);
     }
-
 
     public class UserMapper implements RowMapper<User> {
 

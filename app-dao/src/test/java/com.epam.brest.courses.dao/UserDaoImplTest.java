@@ -96,8 +96,6 @@ public class UserDaoImplTest {
         String userLoginUpdate = "userLoginUpdate";
         String userNameUpdate = "userNameUpdate";
 
-
-
         userDao.updateUser(new User(userId,userLoginUpdate, userNameUpdate));
 
         User userUpdate = userDao.getUserById(userId);

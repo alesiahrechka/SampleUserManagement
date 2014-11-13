@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         User existingUser = getUserByLogin(user.getLogin());
 
         if (existingUser != null) {
-            throw new IllegalArgumentException("User is present in DB");
+            throw new IllegalArgumentException(user + "is present in DB");
         }
         return userDao.addUser(user);
     }
