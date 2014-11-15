@@ -2,29 +2,28 @@ package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
 /**
  * Created by alesya on 25.10.14.
  */
+@Component
 public class UserServiceImpl implements UserService {
-
-    public static final String ADMIN = "admin";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    @Autowired
     private UserDao userDao;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    public static final String ADMIN = "admin";
 
     @Override
     @Transactional

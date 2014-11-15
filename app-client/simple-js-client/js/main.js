@@ -1,5 +1,5 @@
 // The root URL for the RESTful services
-var REST_URL = "http://localhost:8080/users";
+var REST_URL = "http://localhost:8080/app-web-1.0.0-SNAPSHOT/users";
 var currentUser;
 
 findAll();
@@ -27,6 +27,11 @@ $('#btnSave').click(function () {
     return false;
 });
 
+$('#btnRemove').click(function () {
+    removeUser();
+    return false;
+});
+
 function addUser() {
     console.log('addUser');
     $.ajax({
@@ -44,19 +49,37 @@ function addUser() {
         }
     });
 }
+
 function updateUser() {
     console.log('updateUser');
     $.ajax({
         type: 'PUT',
         contentType: 'application/json',
-        url: REST_URL + '/' + $('#userId').val(),
-        dataType: "json",
+        url: REST_URL,
         data: formToJSON(),
         success: function (data, textStatus, jqXHR) {
             alert('User updated successfully');
+            findAll();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert('updateUser error: ' + textStatus);
+        }
+    });
+}
+
+function removeUser() {
+    console.log('removeUser');
+    $.ajax({
+        type: 'DELETE',
+        url: REST_URL + '/' + $('#userId').val(),
+        success: function (data, textStatus, jqXHR) {
+            alert('User removed successfully');
+            findAll();
+            currentUser = {};
+            renderDetails(currentUser);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('removeUser error: ' + textStatus);
         }
     });
 }
@@ -111,6 +134,11 @@ function renderDetails(user) {
     $('#userId').val(user.userId);
     $('#login').val(user.login);
     $('#name').val(user.name);
+    if (user.userId == undefined) {
+        $('#btnRemove').hide();
+    } else {
+        $('#btnRemove').show();
+    }
 }
 
 function search(searchKey) {

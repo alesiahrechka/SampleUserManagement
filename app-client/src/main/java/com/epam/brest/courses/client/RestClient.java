@@ -1,5 +1,7 @@
 package com.epam.brest.courses.client;
 
+
+import com.epam.brest.courses.domain.User;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -36,11 +38,30 @@ public class RestClient {
         List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
         converters.add(new MappingJackson2HttpMessageConverter());
         restTemplate.setMessageConverters(converters);
+
     }
 
     public String getRestVesrsion() {
 
         LOGGER.debug("getRestVesrsion {}", host);
         return restTemplate.getForObject(host + "/version", String.class);
+    }
+
+    public long addUser(User user) {
+
+        LOGGER.debug("addUser {}", user);
+        return restTemplate.postForObject(host + "/users", user, Long.class);
+    }
+
+    public User getUserById(long id) {
+
+        LOGGER.debug("getUserById {}", id);
+        return restTemplate.getForObject(host + "/users/" + id, User.class);
+    }
+
+    public User[] getUsers() {
+
+        LOGGER.debug("getUsers {}", host);
+        return restTemplate.getForObject(host + "/users", User[].class);
     }
 }

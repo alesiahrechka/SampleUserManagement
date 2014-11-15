@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 /**
- * Created by mentee-42 on 3.11.14.
+ * Created by alesya on 04.11.14.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:/spring-rest-mock-test.xml"})
@@ -106,6 +106,7 @@ public class UserRestControllerMockTest {
                 .andExpect(content().string("{\"userId\":1,\"login\":\"login1\",\"name\":\"name1\"}"));
 
         verify(userService);
+
     }
 
     @Test

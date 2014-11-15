@@ -19,7 +19,6 @@ public class VersionRestController {
 
     @ResponseBody
     @RequestMapping(value = "/version", method= RequestMethod.GET)
-    //todo: RequestMethod.Options?
     public ResponseEntity<String> getVersion() {
         return new ResponseEntity("1.0", HttpStatus.OK);
     }

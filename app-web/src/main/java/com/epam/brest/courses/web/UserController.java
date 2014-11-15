@@ -51,4 +51,5 @@ public class UserController {
         ModelAndView view = new ModelAndView("usersList", "users", users);
         return view;
     }
+
 }

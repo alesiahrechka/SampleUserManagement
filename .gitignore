@@ -1,3 +1,8 @@
-*~
-target
-.idea
+.ditignore
+**/.idea
+**/*.iml
+**/*.*~
+**/*.jar
+**/*.class
+**/*.log
+**/target/

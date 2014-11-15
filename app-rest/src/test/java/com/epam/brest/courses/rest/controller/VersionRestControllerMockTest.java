@@ -40,6 +40,7 @@ public class VersionRestControllerMockTest {
                 .setMessageConverters(new MappingJackson2HttpMessageConverter()).build();
     }
 
+
     @Test
     public void getRestApiVersionTest() throws Exception {
         this.mockMvc.perform(
@@ -50,5 +51,4 @@ public class VersionRestControllerMockTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"1.0\""));
     }
-
 }

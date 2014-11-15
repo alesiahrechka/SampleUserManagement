@@ -22,7 +22,7 @@
 </style>
 
 <form:form method="get" modelAttribute="users">
-
+<h1><spring:message code="user.list" /></h1>
 <ul>
     <table>
         <th>
@@ -42,6 +42,6 @@
 </ul>
 </form:form>
 
-<a href='<spring:url value="/inputForm" />'> </a>
+<a href='<spring:url value="/inputForm" />'> <spring:message code="user.create" /></a>
 </body>
 </html>
